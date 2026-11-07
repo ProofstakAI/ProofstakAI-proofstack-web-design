@@ -45,45 +45,16 @@ nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 window.addEventListener('resize',()=>{if(innerWidth>760)closeMenu()});
 
-const video=$('#showreel'),play=$('#film-play'),seek=$('#film-seek'),sound=$('#film-sound');
+const video=$('#showreel');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-let soundOn=false,userPaused=false;
-const clock=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(Math.floor(s%60)).padStart(2,'0')}`;
-function updateFilm(){
- const duration=Number.isFinite(video.duration)?video.duration:40;
- $('#film-time').textContent=`${clock(video.currentTime||0)} / ${clock(duration)}`;
- seek.max=duration;seek.value=video.currentTime||0;
- seek.disabled=!Number.isFinite(video.duration);
- $('#play-label').textContent=video.paused?'Play film':'Pause film';
- $('.play-icon').innerHTML=!video.paused
-  ?'<svg width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12"/><rect x="9.5" y="2" width="3.5" height="12"/></svg>'
-  :'<svg width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l10-5.5-10-5.5z"/></svg>';
-}
 // Native streaming: the browser plays as soon as it has buffered enough,
 // the same as any other autoplaying background video -- no fetch-the-
 // whole-file-first step, which was the actual cause of the startup delay.
-async function tryPlay(){
- try{
-  await video.play();
-  $('#film-status').textContent='Looping showcase. Illustrative AI trade footage and authentic fictional website captures.';
- }catch{
-  $('#film-status').textContent='Your browser paused autoplay. Use Play film to continue.';
- }
- updateFilm();
-}
-play.addEventListener('click',async()=>{
- if(video.paused){userPaused=false;await tryPlay()}
- else{userPaused=true;video.pause();$('#film-status').textContent='Film paused. Use Play film to resume.'}
- updateFilm();
-});
-sound.addEventListener('click',()=>{soundOn=!soundOn;video.muted=!soundOn;sound.textContent=soundOn?'Sound on':'Sound off';sound.setAttribute('aria-pressed',String(soundOn))});
-seek.addEventListener('input',()=>{if(Number.isFinite(video.duration))video.currentTime=Number(seek.value)});
-for(const event of ['timeupdate','loadedmetadata','pause','play','ended','canplay'])video.addEventListener(event,updateFilm);
-video.addEventListener('error',()=>{$('#film-status').textContent='The film could not load. Please try Play again or explore the interactive work below.'});
-document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause();else if(!userPaused&&!reduced.matches)tryPlay()});
-reduced.addEventListener('change',()=>{if(reduced.matches){video.pause();$('#film-status').textContent='Reduced motion: static poster. Play film is optional.'}else if(!userPaused)tryPlay()});
-if(reduced.matches){video.pause();$('#film-status').textContent='Reduced motion: static poster. Play film is optional.'}
-updateFilm();
+// Ambient background only: no player UI, so failures are silent.
+function tryPlay(){video.play().catch(()=>{})}
+document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause();else if(!reduced.matches)tryPlay()});
+reduced.addEventListener('change',()=>{if(reduced.matches)video.pause();else tryPlay()});
+if(reduced.matches)video.pause();
 
 const form=$('#brief-form'),preview=$('#brief-preview'),submitBtn=$('#brief-submit');
 function encode(data){return Object.entries(data).map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(v)).join('&')}

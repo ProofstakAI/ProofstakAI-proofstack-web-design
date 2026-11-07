@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head><meta content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com; font-src 'self' data: https://fonts.gstatic.com https://cdn.fontshare.com; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'none'; form-action 'none'; object-src 'none'; base-uri 'self'" http-equiv="Content-Security-Policy"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Pistonvale Auto | Auto Repair, Maintenance &amp; Diagnostics, Example City (Concept)</title>
+<meta content="Independent website concept for Pistonvale Auto, auto repair, maintenance, and diagnostics at 100 Example Lane, Example City, MO." name="description"/>
+<meta content="noindex, nofollow" name="robots"/>
+<meta content="#161718" name="theme-color"/>
+
+<link as="font" crossorigin="" href="assets/fonts/barlow-condensed-700.woff2" rel="preload" type="font/woff2"/>
+<style>
+@font-face{font-family:"Barlow Condensed";src:url(assets/fonts/barlow-condensed-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Barlow Condensed";src:url(assets/fonts/barlow-condensed-700.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Barlow";src:url(assets/fonts/barlow-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Barlow";src:url(assets/fonts/barlow-600.woff2) format("woff2");font-weight:600;font-display:swap}
+:root{
+  --graphite:#161718;--graphite-2:#202224;--graphite-3:#2b2e31;
+  --ivory:#f2ede3;--ivory-2:#e6dfd2;--steel:#a9afb5;--steel-dk:#5d6369;
+  --amber:#e0a33a;--amber-dk:#9a6514;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --m:clamp(20px,4vw,56px);--max:1440px;
+  --hex:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);
+  --chamfer:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:84px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--graphite);color:var(--ivory);font:400 18px/1.55 var(--body)}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:.95;letter-spacing:-.01em;margin:0;text-transform:uppercase}
+p{margin:0}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--m)}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;background:var(--amber);color:var(--graphite);padding:12px 18px;font-weight:600;text-decoration:none}
+.skip:focus{top:12px}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+/* buttons */
+.btn{--bg:var(--amber);--fg:var(--graphite);display:inline-flex;align-items:center;gap:12px;min-height:54px;padding:0 26px;background:var(--bg);color:var(--fg);font:700 20px/1 var(--display);letter-spacing:.04em;text-transform:uppercase;text-decoration:none;clip-path:var(--chamfer);border:0;cursor:pointer;transition:transform .25s var(--ease),background-color .25s}
+.btn:hover{transform:translateY(-2px);--bg:#efb655}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn--ghost{--bg:var(--ivory);--fg:var(--graphite)}
+.btn--ghost:hover{--bg:#fff}
+.btn .nut{width:14px;height:14px;background:currentColor;clip-path:var(--hex);flex:none;transition:transform .5s var(--ease)}
+.btn:hover .nut{transform:rotate(60deg)}
+
+/* header */
+.bar{position:sticky;top:0;z-index:50;background:var(--graphite)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px}
+.mark{display:flex;align-items:center;gap:12px;text-decoration:none;font:700 24px/1 var(--display);text-transform:uppercase;letter-spacing:.02em}
+.mark i{width:26px;height:26px;background:var(--amber);clip-path:var(--hex);display:block}
+.nav{display:flex;align-items:center;gap:28px}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+.nav ul a{text-decoration:none;font-weight:600;font-size:17px;padding:8px 0;color:var(--ivory-2);position:relative}
+.nav ul a::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:3px;background:var(--amber);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.nav ul a:hover::after,.nav ul a[aria-current="true"]::after{transform:scaleX(1)}
+.nav ul a[aria-current="true"]{color:var(--ivory)}
+.bar .btn{min-height:46px;font-size:18px;padding:0 18px}
+.menu-btn{display:none;background:none;border:0;color:var(--ivory);font:600 17px var(--body);min-height:48px;padding:0 4px;cursor:pointer;align-items:center;gap:10px}
+.menu-btn span{width:22px;height:2px;background:currentColor;display:block;box-shadow:0 -7px 0 currentColor,0 7px 0 currentColor}
+@media (max-width:900px){
+  .js .menu-btn{display:inline-flex}
+  .js .nav{position:absolute;left:0;right:0;top:72px;background:var(--graphite-2);flex-direction:column;align-items:stretch;padding:12px var(--m) 28px;gap:16px;display:none}
+  .js .nav.open{display:flex}
+  .js .nav ul{flex-direction:column;gap:0}
+  .js .nav ul a{display:block;padding:14px 0;font-size:20px}
+  .nav{flex-wrap:wrap;gap:12px}
+  .nav ul{flex-wrap:wrap;gap:16px}
+  .bar .wrap{flex-wrap:wrap;height:auto;min-height:72px}
+}
+
+/* hero */
+.hero{position:relative;height:calc(100svh - 72px);min-height:560px;max-height:1000px;overflow:hidden;background:#0d0e0f}
+.hero video,.hero .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 50%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,13,14,.92) 0%,rgba(12,13,14,.7) 38%,rgba(12,13,14,.15) 72%),linear-gradient(0deg,rgba(12,13,14,.75),transparent 45%);pointer-events:none}
+.hero .wrap{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(40px,8vh,96px)}
+.hero h1{font-size:clamp(64px,9.2vw,152px);max-width:12ch}
+.hero .sub{font-size:clamp(19px,1.6vw,24px);margin-top:28px;max-width:30ch;color:var(--ivory)}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.vctl{position:absolute;z-index:3;right:var(--m);bottom:clamp(40px,8vh,96px);display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 16px;background:rgba(18,19,20,.72);color:var(--ivory);border:0;font:600 15px var(--body);cursor:pointer}
+.vctl:hover{background:rgba(18,19,20,.92)}
+.vctl svg{width:16px;height:16px}
+@media (max-width:760px){
+  .hero{height:auto;min-height:calc(100svh - 72px - 64px)}
+  .hero video,.hero .poster{object-position:66% 50%}
+  .hero::after{background:linear-gradient(0deg,rgba(12,13,14,.95) 0%,rgba(12,13,14,.75) 50%,rgba(12,13,14,.35) 100%)}
+  .hero .wrap{padding-top:38vh;padding-bottom:88px}
+  .hero h1{font-size:clamp(56px,16vw,88px)}
+  .vctl{bottom:20px;right:var(--m)}
+}
+
+/* sections */
+section{scroll-margin-top:72px}
+.svc{padding:clamp(96px,12vw,180px) 0}
+.svc-head{display:grid;grid-template-columns:1fr 1fr;gap:var(--m);align-items:end;margin-bottom:clamp(48px,6vw,88px)}
+.svc-head h2{font-size:clamp(48px,6vw,96px)}
+.svc-head p{max-width:46ch;color:var(--ivory-2)}
+.cards{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:clamp(16px,2vw,28px)}
+.card{background:var(--graphite-2);padding:0 0 32px;display:flex;flex-direction:column;text-decoration:none;transition:background-color .3s,transform .4s var(--ease)}
+.card:hover{background:var(--graphite-3);transform:translateY(-4px)}
+.card figure{margin:0;aspect-ratio:4/3;overflow:hidden;background:#0d0e0f}
+.card:nth-child(1) figure{aspect-ratio:auto;flex:1;min-height:320px}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.card:hover img{transform:scale(1.04)}
+.card h3{font-size:clamp(34px,3vw,46px);margin:28px 28px 12px;display:flex;align-items:center;gap:14px}
+.card h3::before{content:"";width:18px;height:18px;background:var(--amber);clip-path:var(--hex);flex:none}
+.card p{margin:0 28px;color:var(--ivory-2)}
+.card .go{margin:22px 28px 0;font:700 18px var(--display);text-transform:uppercase;letter-spacing:.04em;color:var(--amber)}
+@media (max-width:900px){.svc-head{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.card:nth-child(1) figure{aspect-ratio:4/3;flex:none;min-height:0}}
+
+/* editorial */
+.edit{background:var(--ivory);color:var(--graphite);padding:clamp(96px,12vw,180px) 0;overflow:hidden}
+.edit .wrap{display:grid;grid-template-columns:5fr 7fr;gap:clamp(32px,5vw,88px);align-items:center}
+.edit .hexfig{margin:0;margin-left:calc(var(--m) * -1 - 6vw);aspect-ratio:1.155/1;clip-path:var(--hex);background:#0d0e0f}
+.edit .hexfig img{width:100%;height:100%;object-fit:cover}
+.edit h2{font-size:clamp(46px,5.4vw,88px);max-width:12ch}
+.edit .lede{font-size:clamp(22px,2vw,30px);line-height:1.35;margin-top:36px;max-width:34ch}
+.edit .cols{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:44px}
+.edit .cols p{color:#3a3c3f}
+.edit .cols h3{font-size:26px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.edit .cols h3::before{content:"";width:12px;height:12px;background:var(--amber-dk);clip-path:var(--hex)}
+@media (max-width:900px){.edit .wrap{grid-template-columns:1fr}.edit .hexfig{margin-left:-14vw;width:96vw}.edit .cols{grid-template-columns:1fr}}
+
+/* selector */
+.sel{padding:clamp(96px,12vw,180px) 0}
+.sel h2{font-size:clamp(48px,6vw,96px);max-width:14ch}
+.sel .intro{margin-top:24px;max-width:52ch;color:var(--ivory-2)}
+.tabs{display:flex;gap:10px;margin:48px 0 0;flex-wrap:wrap}
+.tab{display:inline-flex;align-items:center;gap:12px;min-height:56px;padding:0 24px;background:var(--graphite-2);color:var(--ivory);border:0;font:700 22px var(--display);text-transform:uppercase;letter-spacing:.03em;cursor:pointer;clip-path:var(--chamfer);transition:background-color .25s,color .25s}
+.tab::before{content:"";width:14px;height:14px;background:var(--steel-dk);clip-path:var(--hex);transition:background-color .25s,transform .5s var(--ease)}
+.tab:hover{background:var(--graphite-3)}
+.tab[aria-selected="true"]{background:var(--ivory);color:var(--graphite)}
+.tab[aria-selected="true"]::before{background:var(--amber-dk);transform:rotate(60deg)}
+.panels{margin-top:12px}
+.panel{display:grid;grid-template-columns:7fr 5fr;background:var(--graphite-2);min-height:460px}
+.panel + .panel{margin-top:12px}
+.js .panel + .panel{margin-top:0}
+.panel .txt{padding:clamp(28px,4vw,64px)}
+.panel h3{font-size:clamp(38px,3.6vw,58px)}
+.panel .txt > p{margin-top:18px;max-width:50ch;color:var(--ivory-2)}
+.panel dl{display:grid;grid-template-columns:1fr 1fr;gap:28px 40px;margin:36px 0 0}
+.panel dt{font:700 22px var(--display);text-transform:uppercase;color:var(--amber);letter-spacing:.03em}
+.panel dd{margin:8px 0 0;color:var(--ivory-2)}
+.panel figure{margin:0;overflow:hidden;background:#0d0e0f}
+.panel img{width:100%;height:100%;object-fit:cover}
+.js .panel[hidden]{display:none!important}
+@media (prefers-reduced-motion:no-preference){.js .panel:not([hidden]) .txt>*{animation:rise .5s var(--ease) both}.js .panel:not([hidden]) .txt>*:nth-child(2){animation-delay:.06s}.js .panel:not([hidden]) .txt>*:nth-child(3){animation-delay:.12s}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (max-width:900px){.panel{grid-template-columns:1fr}.panel figure{aspect-ratio:16/9;order:-1}.panel dl{grid-template-columns:1fr}.tab{flex:1 1 auto;justify-content:center}}
+
+/* visit */
+.visit{background:var(--amber);color:var(--graphite);padding:clamp(96px,12vw,180px) 0}
+.visit .wrap{display:grid;grid-template-columns:6fr 6fr;gap:clamp(32px,5vw,96px)}
+.visit h2{font-size:clamp(56px,7.5vw,128px)}
+.visit .lede{font-size:clamp(20px,1.6vw,24px);margin-top:28px;max-width:36ch}
+.visit .phone{display:block;font:700 clamp(44px,5.4vw,84px)/1 var(--display);text-decoration:none;margin-top:44px;letter-spacing:-.01em}
+.visit .phone:hover{text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:8px}
+.visit address{font-style:normal;font-size:20px;line-height:1.45;margin-top:22px}
+.visit .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+.visit .btn{--bg:var(--graphite);--fg:var(--ivory)}
+.visit .btn:hover{--bg:#000}
+.visit .btn--ghost{--bg:var(--ivory);--fg:var(--graphite)}
+.prep{background:var(--graphite);color:var(--ivory);padding:clamp(28px,4vw,56px)}
+.prep h3{font-size:clamp(32px,3vw,44px)}
+.prep > p{margin-top:12px;color:var(--ivory-2)}
+.prep ul{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:18px}
+.prep li{display:grid;grid-template-columns:22px 1fr;gap:14px;align-items:start}
+.prep li::before{content:"";width:14px;height:14px;margin-top:7px;background:var(--amber);clip-path:var(--hex)}
+.prep li strong{display:block;font-weight:600}
+.prep li span{color:var(--ivory-2)}
+.prep .note{margin-top:28px;font-size:16px;color:var(--steel)}
+@media (max-width:900px){.visit .wrap{grid-template-columns:1fr}}
+
+/* footer */
+footer{padding:clamp(72px,9vw,140px) 0 40px;background:var(--graphite)}
+.bigmark{display:flex;align-items:flex-end;gap:clamp(10px,1.4vw,22px);font:700 clamp(80px,24vw,340px)/.8 var(--display);text-transform:uppercase;letter-spacing:-.02em;white-space:nowrap}
+.bigmark i{width:.62em;height:.62em;background:var(--amber);clip-path:var(--hex);flex:none;margin-bottom:.06em}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:56px;color:var(--ivory-2);font-size:17px}
+.fgrid h3{font:700 20px var(--display);letter-spacing:.04em;color:var(--ivory);margin-bottom:10px}
+.fgrid ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.fgrid a{text-decoration:none}.fgrid a:hover{text-decoration:underline}
+.disclose{margin-top:72px;font-size:16px;color:var(--steel)}
+@media (max-width:760px){.fgrid{grid-template-columns:1fr}.bigmark{font-size:27vw}}
+
+/* mobile call bar */
+.callbar{display:none}
+@media (max-width:760px){
+  body{padding-bottom:64px}
+  .callbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;height:64px;background:var(--amber);color:var(--graphite);align-items:center;justify-content:center;gap:12px;font:700 21px var(--display);text-transform:uppercase;letter-spacing:.04em;text-decoration:none;padding-bottom:env(safe-area-inset-bottom)}
+  .callbar i{width:14px;height:14px;background:currentColor;clip-path:var(--hex)}
+  .bar .btn{display:none}
+}
+
+/* reveal */
+@media (prefers-reduced-motion:no-preference){
+  .js .rv{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .js .rv.in{opacity:1;transform:none}
+  .js .rv[data-d="1"]{transition-delay:.08s}.js .rv[data-d="2"]{transition-delay:.16s}.js .rv[data-d="3"]{transition-delay:.24s}
+}
+</style>
+<link href="../../assets/proofstack-icon.png" rel="icon"/><style>
+html{scroll-padding-top:55px;overflow-x:clip}
+.concept-notice{position:relative;z-index:200;background:#1fbfa6;color:#07131a;
+font:600 12px/1.5 system-ui,sans-serif;padding:10px 18px;text-align:center}
+.concept-notice a{color:inherit;text-decoration:underline}
+#demo-notice{scroll-margin-top:70px}
+.demo-feedback{padding:14px;border:1px solid currentColor;margin-top:16px}
+.bigmark{font-size:clamp(60px,17vw,240px)!important}</style><script>
+document.addEventListener('submit', function(e) {
+ e.preventDefault();
+ const f=e.target;
+ let m=f.querySelector('.demo-feedback');
+ if(!m){m=document.createElement('p');m.className='demo-feedback';m.setAttribute('role','status');f.append(m)}
+ m.textContent='Demo only. Nothing was sent or stored. This is a fictional business.';
+}, true);
+document.addEventListener('click',function(e){
+ const a=e.target.closest('a[href="#demo-notice"]');
+ if(!a)return;
+ e.preventDefault();
+ const n=document.getElementById('demo-notice');
+ n.textContent='Demo only: contact details and destinations are fictional. Nothing was sent.';
+ n.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script></head>
+<body><aside aria-label="Demo disclosure" class="concept-notice" id="demo-notice">Concept demo · Fictional business · Forms do not send or store information</aside>
+<a class="skip" href="#main">Skip to content</a>
+<header class="bar">
+<div class="wrap">
+<a aria-label="Pistonvale Auto, back to top" class="mark" href="#top"><i aria-hidden="true"></i>Pistonvale Auto</a>
+<button aria-controls="site-nav" aria-expanded="false" class="menu-btn" type="button"><span aria-hidden="true"></span>Menu</button>
+<nav aria-label="Main" class="nav" id="site-nav">
+<ul>
+<li><a href="#services">Services</a></li>
+<li><a href="#approach">Approach</a></li>
+<li><a href="#guide">Service guide</a></li>
+<li><a href="#visit">Plan your visit</a></li>
+</ul>
+<a class="btn" href="#demo-notice"><span aria-hidden="true" class="nut"></span>(573) 555-0100</a>
+</nav>
+</div>
+</header>
+<main id="main">
+<section aria-labelledby="hero-title" class="hero" id="top">
+<img alt="" aria-hidden="true" class="poster" fetchpriority="high" height="752" src="assets/poster.jpg" width="1344"/>
+<video aria-hidden="true" autoplay="" height="1074" id="hero-video" loop="" muted="" playsinline="" poster="assets/poster.jpg" preload="none" width="1920">
+<source data-src="assets/hero.mp4" type="video/mp4"/>
+</video>
+<div class="wrap">
+<h1 id="hero-title">Keep Your Day Moving.</h1>
+<p class="sub">Auto repair, maintenance, and diagnostics in Example City.</p>
+<div class="ctas">
+<a class="btn" href="#demo-notice"><span aria-hidden="true" class="nut"></span>Call Pistonvale Auto</a>
+<a class="btn btn--ghost" href="#services">Explore Services</a>
+</div>
+</div>
+<button aria-pressed="false" class="vctl" hidden="" id="vctl" type="button">
+<svg aria-hidden="true" viewbox="0 0 16 16"><path d="M3 2h3v12H3zM10 2h3v12h-3z" fill="currentColor"></path></svg><span>Pause video</span>
+</button>
+</section>
+<section aria-labelledby="svc-title" class="svc" id="services">
+<div class="wrap">
+<div class="svc-head">
+<h2 class="rv" id="svc-title">How we can help</h2>
+<p class="rv" data-d="1">Whether something feels wrong, a service is coming due, or a warning light just came on, start with a phone call. Tell the shop what you're noticing and plan the visit from there.</p>
+</div>
+<div class="cards">
+<a class="card rv" data-tab="repair" href="#guide">
+<figure><img alt="Close-up of a gloved hand turning a ratchet on an engine bolt" height="720" loading="lazy" src="assets/frame-repair.jpg" width="1280"/></figure>
+<h3>Auto Repair</h3>
+<p>For the noises, leaks, and changes in how your vehicle drives that tell you something needs attention.</p>
+<span class="go">See what to expect</span>
+</a>
+<a class="card rv" data-d="1" data-tab="maint" href="#guide">
+<figure><img alt="Workshop lighting falling across engine components" height="720" loading="lazy" src="assets/frame-maint.jpg" width="1280"/></figure>
+<h3>Maintenance</h3>
+<p>Routine care that follows your vehicle's recommended schedule, so small things stay small.</p>
+<span class="go">See what to expect</span>
+</a>
+<a class="card rv" data-d="2" data-tab="diag" href="#guide">
+<figure><img alt="Engine bay detail under warm workshop light" height="720" loading="lazy" src="assets/frame-diag.jpg" width="1280"/></figure>
+<h3>Diagnostics</h3>
+<p>When a warning light or an intermittent problem needs a careful look before anything gets replaced.</p>
+<span class="go">See what to expect</span>
+</a>
+</div>
+</div>
+</section>
+<section aria-labelledby="edit-title" class="edit" id="approach">
+<div class="wrap">
+<figure class="hexfig rv"><img alt="Socket seated on a hex bolt, lit by warm workshop light" height="752" loading="lazy" src="assets/poster.jpg" width="1344"/></figure>
+<div>
+<h2 class="rv" id="edit-title">One bolt at a time</h2>
+<p class="lede rv" data-d="1">Good auto work is quiet and precise: listen to the driver, find the cause, explain it plainly, then do the job carefully.</p>
+<div class="cols">
+<div class="rv" data-d="2"><h3>Start with what you notice</h3><p>You know your vehicle best. A clear description of the sound, smell, or feel is the first diagnostic tool, so the conversation comes first.</p></div>
+<div class="rv" data-d="3"><h3>Decide with clear answers</h3><p>Ask what was found and what it means for you. A good visit leaves you knowing what was done and why.</p></div>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="guide-title" class="sel" id="guide">
+<div class="wrap">
+<h2 class="rv" id="guide-title">Not sure what you need?</h2>
+<p class="intro rv" data-d="1">Pick what fits your situation. Each guide explains the category in general terms. For specifics about your vehicle, call the shop.</p>
+<div aria-label="Service categories" class="tabs" hidden="" role="tablist">
+<button aria-controls="p-repair" aria-selected="true" class="tab" id="t-repair" role="tab">Auto Repair</button>
+<button aria-controls="p-maint" aria-selected="false" class="tab" id="t-maint" role="tab" tabindex="-1">Maintenance</button>
+<button aria-controls="p-diag" aria-selected="false" class="tab" id="t-diag" role="tab" tabindex="-1">Diagnostics</button>
+</div>
+<div class="panels">
+<div aria-labelledby="t-repair" class="panel" id="p-repair" role="tabpanel">
+<div class="txt">
+<h3>Something feels wrong</h3>
+<p>Repair is for problems you can already hear, see, or feel. Describe them early; small symptoms are easier to trace than big ones.</p>
+<dl>
+<div><dt>Good time to call</dt><dd>A new noise, a vibration, a fluid spot under the car, or a change in braking or handling.</dd></div>
+<div><dt>Have ready</dt><dd>Year, make, and model, and when the problem shows up: cold starts, highway speed, turning, or braking.</dd></div>
+<div><dt>Ask about</dt><dd>What was found, what the options are, and what can wait versus what shouldn't.</dd></div>
+<div><dt>Next step</dt><dd>Call (573) 555-0100 to describe the issue and arrange a visit.</dd></div>
+</dl>
+</div>
+<figure><img alt="Ratchet engaging a bolt on an engine component" height="720" loading="lazy" src="assets/frame-repair.jpg" width="1280"/></figure>
+</div>
+<div aria-labelledby="t-maint" class="panel" id="p-maint" role="tabpanel">
+<div class="txt">
+<h3>Staying ahead of it</h3>
+<p>Maintenance is the scheduled care your owner's manual recommends. It's the least dramatic work a shop does, and often the most valuable.</p>
+<dl>
+<div><dt>Good time to call</dt><dd>A maintenance reminder on the dash, an upcoming road trip, or a service interval you're unsure about.</dd></div>
+<div><dt>Have ready</dt><dd>Your current mileage and, if you have it, when the last service was done.</dd></div>
+<div><dt>Ask about</dt><dd>What your vehicle's schedule calls for at this point and what to plan for next.</dd></div>
+<div><dt>Next step</dt><dd>Call (573) 555-0100 to talk through what's due.</dd></div>
+</dl>
+</div>
+<figure><img alt="Warm light across engine parts in a workshop" height="720" loading="lazy" src="assets/frame-maint.jpg" width="1280"/></figure>
+</div>
+<div aria-labelledby="t-diag" class="panel" id="p-diag" role="tabpanel">
+<div class="txt">
+<h3>Finding the cause</h3>
+<p>Diagnostics is careful investigation: confirming what's actually wrong before parts get replaced, especially for warning lights and problems that come and go.</p>
+<dl>
+<div><dt>Good time to call</dt><dd>A check-engine or other warning light, or a problem that appears only sometimes.</dd></div>
+<div><dt>Have ready</dt><dd>Which light came on, whether it's steady or flashing, and what the car was doing at the time.</dd></div>
+<div><dt>Ask about</dt><dd>What the findings point to and what you'd recommend doing first.</dd></div>
+<div><dt>Next step</dt><dd>Call (573) 555-0100 and describe the light or symptom.</dd></div>
+</dl>
+</div>
+<figure><img alt="Engine detail lit by low workshop light" height="720" loading="lazy" src="assets/frame-diag.jpg" width="1280"/></figure>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="visit-title" class="visit" id="visit">
+<div class="wrap">
+<div>
+<h2 class="rv" id="visit-title">Plan your visit</h2>
+<p class="lede rv" data-d="1">The quickest way to get started is a phone call. Hours and scheduling are best confirmed directly with the shop.</p>
+<a class="phone rv" data-d="2" href="#demo-notice">(573) 555-0100</a>
+<address class="rv" data-d="2">Pistonvale Auto<br/>100 Example Lane<br/>Example City, MO 00000</address>
+<div class="ctas rv" data-d="3">
+<a class="btn" href="#demo-notice"><span aria-hidden="true" class="nut"></span>Call Pistonvale Auto</a>
+<a class="btn btn--ghost" href="#demo-notice" rel="noopener">Get directions<span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+</div>
+<div class="prep rv" data-d="1">
+<h3>Before you call</h3>
+<p>A few details make the first conversation faster.</p>
+<ul>
+<li><div><strong>Your vehicle</strong><span>Year, make, model, and approximate mileage.</span></div></li>
+<li><div><strong>What you're noticing</strong><span>The sound, smell, light, or feel, in your own words.</span></div></li>
+<li><div><strong>When it happens</strong><span>Starting up, at speed, turning, braking, or all the time.</span></div></li>
+<li><div><strong>How long it's been going on</strong><span>Sudden changes are worth mentioning first.</span></div></li>
+</ul>
+<p class="note">If a warning light is flashing or the vehicle doesn't feel safe to drive, mention that right away when you call.</p>
+</div>
+</div>
+</section>
+</main>
+<footer aria-labelledby="foot-title">
+<div class="wrap">
+<h2 class="bigmark" id="foot-title"><i aria-hidden="true"></i>Pistonvale</h2>
+<div class="fgrid">
+<div><h3>Visit</h3><p>100 Example Lane<br/>Example City, MO 00000</p></div>
+<div><h3>Call</h3><p><a href="#demo-notice">(573) 555-0100</a></p></div>
+<div><h3>Explore</h3><ul><li><a href="#services">Services</a></li><li><a href="#guide">Service guide</a></li><li><a href="#visit">Plan your visit</a></li></ul></div>
+</div>
+<p class="disclose">Independent website concept by Proofstack AI Consulting LLC. Not an official business website. Illustrative imagery.</p>
+</div>
+</footer>
+<a class="callbar" href="#demo-notice"><i aria-hidden="true"></i>Call (573) 555-0100</a>
+<style>.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style>
+<script>
+(function(){
+  var d=document,root=d.documentElement;root.classList.add('js');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  /* mobile nav */
+  var mb=d.querySelector('.menu-btn'),nav=d.getElementById('site-nav');
+  function setNav(o){nav.classList.toggle('open',o);mb.setAttribute('aria-expanded',String(o));}
+  mb.addEventListener('click',function(){setNav(mb.getAttribute('aria-expanded')!=='true');});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))setNav(false);});
+  d.addEventListener('keydown',function(e){if(e.key==='Escape'&&mb.getAttribute('aria-expanded')==='true'){setNav(false);mb.focus();}});
+  /* active section */
+  var links=[].slice.call(d.querySelectorAll('.nav ul a'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){links.forEach(function(a){a.setAttribute('aria-current',a.getAttribute('href')==='#'+en.target.id?'true':'false');});}});},{rootMargin:'-45% 0px -50% 0px'});
+    links.forEach(function(a){var s=d.querySelector(a.getAttribute('href'));if(s)io.observe(s);});
+    var ro=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');ro.unobserve(en.target);}});},{threshold:.12});
+    d.querySelectorAll('.rv').forEach(function(el){ro.observe(el);});
+  } else {d.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});}
+  /* tabs */
+  var tl=d.querySelector('[role=tablist]');tl.hidden=false;
+  var tabs=[].slice.call(tl.querySelectorAll('[role=tab]'));
+  function sel(t,focus){tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',String(on));x.tabIndex=on?0:-1;d.getElementById(x.getAttribute('aria-controls')).hidden=!on;});if(focus)t.focus();}
+  tabs.forEach(function(t,i){t.addEventListener('click',function(){sel(t);});t.addEventListener('keydown',function(e){var k=e.key,n=null;if(k==='ArrowRight')n=tabs[(i+1)%tabs.length];if(k==='ArrowLeft')n=tabs[(i-1+tabs.length)%tabs.length];if(k==='Home')n=tabs[0];if(k==='End')n=tabs[tabs.length-1];if(n){e.preventDefault();sel(n,true);}});});
+  sel(tabs[0]);
+  d.querySelectorAll('[data-tab]').forEach(function(c){c.addEventListener('click',function(){var t=d.getElementById('t-'+c.getAttribute('data-tab'));if(t)sel(t);});});
+  /* hero video */
+  var v=d.getElementById('hero-video'),btn=d.getElementById('vctl'),src=v.querySelector('source'),loaded=false;
+  var save=navigator.connection&&navigator.connection.saveData;
+  function label(playing){btn.setAttribute('aria-pressed',String(!playing));btn.querySelector('span').textContent=playing?'Pause video':'Play video';btn.querySelector('svg').innerHTML=playing?'<path fill="currentColor" d="M3 2h3v12H3zM10 2h3v12h-3z"/>':'<path fill="currentColor" d="M4 2l10 6-10 6z"/>';}
+  function load(){if(loaded)return;loaded=true;var u=src.getAttribute('data-src');if(window.matchMedia('(max-width: 900px)').matches)u=u.replace('hero.mp4','hero-sm.mp4');src.src=u;v.load();}
+  function play(){load();var p=v.play();if(p&&p.catch)p.catch(function(){label(false);});}
+  v.addEventListener('playing',function(){v.classList.add('on');label(true);});
+  v.addEventListener('pause',function(){label(false);});
+  v.addEventListener('error',function(){btn.hidden=true;},true);
+  src.addEventListener('error',function(){btn.hidden=true;});
+  btn.hidden=false;
+  btn.addEventListener('click',function(){if(v.paused)play();else v.pause();});
+  if(!reduce.matches&&!save){play();}else{label(false);}
+  d.addEventListener('visibilitychange',function(){if(d.hidden&&!v.paused){v.pause();v.dataset.resume='1';}else if(!d.hidden&&v.dataset.resume){delete v.dataset.resume;v.play();}});
+})();
+</script>
+</body>
+</html>

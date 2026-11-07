@@ -45,21 +45,23 @@ nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 window.addEventListener('resize',()=>{if(innerWidth>760)closeMenu()});
 
-const video=$('#showreel'),source=$('#film-source'),play=$('#film-play'),seek=$('#film-seek'),sound=$('#film-sound');
+const video=$('#showreel'),play=$('#film-play'),seek=$('#film-seek'),sound=$('#film-sound');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-let filmReady=false,soundOn=false,userPaused=false,loadingFilm=false,filmBlobURL=null;
+let soundOn=false,userPaused=false;
 const clock=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(Math.floor(s%60)).padStart(2,'0')}`;
 function updateFilm(){
  const duration=Number.isFinite(video.duration)?video.duration:40;
  $('#film-time').textContent=`${clock(video.currentTime||0)} / ${clock(duration)}`;
  seek.max=duration;seek.value=video.currentTime||0;
- seek.disabled=!filmReady||!Number.isFinite(video.duration);
- play.disabled=loadingFilm;
- $('#play-label').textContent=loadingFilm?'Loading film…':video.paused?'Play film':'Pause film';
+ seek.disabled=!Number.isFinite(video.duration);
+ $('#play-label').textContent=video.paused?'Play film':'Pause film';
  $('.play-icon').innerHTML=!video.paused
   ?'<svg width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12"/><rect x="9.5" y="2" width="3.5" height="12"/></svg>'
   :'<svg width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l10-5.5-10-5.5z"/></svg>';
 }
+// Native streaming: the browser plays as soon as it has buffered enough,
+// the same as any other autoplaying background video -- no fetch-the-
+// whole-file-first step, which was the actual cause of the startup delay.
 async function tryPlay(){
  try{
   await video.play();
@@ -69,44 +71,19 @@ async function tryPlay(){
  }
  updateFilm();
 }
-async function prepareFilm(explicit=false){
- if(loadingFilm)return;
- if(!filmReady){
-  loadingFilm=true;updateFilm();
-  $('#film-status').textContent='Loading the looping showcase…';
-  try{
-   // Load automatically; the in-memory Blob also supports seeking on review hosts
-   // whose media proxy does not reliably handle HTTP byte-range requests.
-   if(!filmBlobURL){
-    const response=await fetch(source.dataset.src);
-    if(!response.ok)throw new Error('Film download unavailable');
-    filmBlobURL=URL.createObjectURL(await response.blob());
-   }
-   video.autoplay=(!reduced.matches||explicit)&&!userPaused;
-   video.src=filmBlobURL;video.loop=true;video.muted=!soundOn;video.load();filmReady=true;
-  }catch{
-   $('#film-status').textContent='The film could not be prepared. Use Play film to retry, or explore the work below.';
-  }finally{
-   loadingFilm=false;updateFilm();
-  }
- }
- if(filmReady&&!userPaused&&!document.hidden&&(!reduced.matches||explicit))await tryPlay();
-}
 play.addEventListener('click',async()=>{
- if(loadingFilm)return;
- if(!filmReady||video.paused){userPaused=false;await prepareFilm(true)}
+ if(video.paused){userPaused=false;await tryPlay()}
  else{userPaused=true;video.pause();$('#film-status').textContent='Film paused. Use Play film to resume.'}
  updateFilm();
 });
 sound.addEventListener('click',()=>{soundOn=!soundOn;video.muted=!soundOn;sound.textContent=soundOn?'Sound on':'Sound off';sound.setAttribute('aria-pressed',String(soundOn))});
-seek.addEventListener('input',()=>{if(filmReady&&Number.isFinite(video.duration))video.currentTime=Number(seek.value)});
-for(const event of ['timeupdate','loadedmetadata','pause','play','ended'])video.addEventListener(event,updateFilm);
+seek.addEventListener('input',()=>{if(Number.isFinite(video.duration))video.currentTime=Number(seek.value)});
+for(const event of ['timeupdate','loadedmetadata','pause','play','ended','canplay'])video.addEventListener(event,updateFilm);
 video.addEventListener('error',()=>{$('#film-status').textContent='The film could not load. Please try Play again or explore the interactive work below.'});
-source.addEventListener('error',()=>{$('#film-status').textContent='The film could not load. Please try again or explore the work below.'});
-document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause();else if(!userPaused&&!reduced.matches)prepareFilm()});
-reduced.addEventListener('change',()=>{if(reduced.matches){video.pause();$('#film-status').textContent='Reduced motion: static poster. Play film is optional.'}else if(!userPaused)prepareFilm()});
-if(!reduced.matches)prepareFilm();
-else{$('#film-status').textContent='Reduced motion: static poster. Play film is optional.';updateFilm()}
+document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause();else if(!userPaused&&!reduced.matches)tryPlay()});
+reduced.addEventListener('change',()=>{if(reduced.matches){video.pause();$('#film-status').textContent='Reduced motion: static poster. Play film is optional.'}else if(!userPaused)tryPlay()});
+if(reduced.matches){video.pause();$('#film-status').textContent='Reduced motion: static poster. Play film is optional.'}
+updateFilm();
 
 const form=$('#brief-form'),preview=$('#brief-preview'),submitBtn=$('#brief-submit');
 function encode(data){return Object.entries(data).map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(v)).join('&')}

@@ -7,7 +7,7 @@ const projects=[
  {slug:'arcvale',name:'Arcvale Metalworks',category:'industrial',type:'Metal fabrication',tone:'Craftsmanship, brought into focus.'},
  {slug:'pistonvale',name:'Pistonvale Auto',category:'automotive',type:'Automotive services',tone:'A sharper experience, from the start.'},
  {slug:'cinderquarry',name:'Cinderquarry Welding',category:'trades',type:'Welding & fabrication',tone:'Honest work. Distinctive character.'},
- {slug:'summit-comfort-hvac',name:'Summit Comfort HVAC',category:'trades',type:'HVAC services',tone:'Real client project.',real:true}
+ {slug:'summit-comfort-hvac',name:'Summit Comfort HVAC',category:'trades',type:'HVAC services',tone:'Comfort, with a clear next step.'}
 ];
 const $=s=>document.querySelector(s);
 const grid=$('#work-grid');
@@ -15,7 +15,7 @@ for(const p of projects){
  const article=document.createElement('article');article.className='work-card';article.dataset.category=p.category;
  const button=document.createElement('button');button.type='button';button.setAttribute('aria-label',`Explore ${p.name} interactive demo`);
  const arrow='<svg class="i-arrow" width="1em" height="1em" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H5M12 4V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
- button.innerHTML=`<div class="work-picture"><img src="assets/${p.slug}-preview.webp" alt="${p.name} website concept, ${p.type.toLowerCase()}" width="1100" height="760" loading="lazy"><span class="work-badge">EXPLORE LIVE DEMO ${arrow}</span></div><div class="work-card-info"><div><div class="work-card-title"><h3>${p.name}</h3><span aria-hidden="true">${arrow}</span></div><p>${p.type} / ${p.tone}</p></div><small>${p.real?'CLIENT PROJECT':'FICTIONAL CONCEPT'}</small></div>`;
+ button.innerHTML=`<div class="work-picture"><img src="assets/${p.slug}-preview.webp" alt="${p.name} website concept, ${p.type.toLowerCase()}" width="1100" height="760" loading="lazy"><span class="work-badge">EXPLORE LIVE DEMO ${arrow}</span></div><div class="work-card-info"><div><div class="work-card-title"><h3>${p.name}</h3><span aria-hidden="true">${arrow}</span></div><p>${p.type} / ${p.tone}</p></div><small>FICTIONAL CONCEPT</small></div>`;
  button.addEventListener('click',()=>openDemo(p,button));article.append(button);grid.append(article);
 }
 document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{
@@ -27,9 +27,9 @@ document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListen
 const dialog=$('#demo-dialog');let returnFocus=null;
 function openDemo(project,trigger){
  returnFocus=trigger;$('#demo-title').textContent=project.name;
- $('#demo-frame').src=`demos/${project.slug}/index.html`;$('#demo-frame').title=project.real?`${project.name}: client project`:`${project.name}: interactive fictional business concept`;
- $('#demo-kind').textContent=project.real?'CLIENT PROJECT':'INTERACTIVE FICTIONAL CONCEPT';
- $('#demo-disclaimer').textContent=project.real?'Real client project. Demo form does not send or store information.':'Fictional business. Demo forms do not send or store information.';
+ $('#demo-frame').src=`demos/${project.slug}/index.html`;$('#demo-frame').title=`${project.name}: interactive fictional business concept`;
+ $('#demo-kind').textContent='INTERACTIVE FICTIONAL CONCEPT';
+ $('#demo-disclaimer').textContent='Fictional business. Demo forms do not send or store information.';
  $('#demo-open').href=`demos/${project.slug}/index.html`;
  setDevice('desktop');dialog.showModal();document.body.style.overflow='hidden';
 }
@@ -47,66 +47,66 @@ window.addEventListener('resize',()=>{if(innerWidth>760)closeMenu()});
 
 const video=$('#showreel'),source=$('#film-source'),play=$('#film-play'),seek=$('#film-seek'),sound=$('#film-sound');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-let fullFilm=false,userPlaying=false,soundOn=false,idlePaused=reduced.matches,loadingFilm=false,filmBlobURL=null;
+let filmReady=false,soundOn=false,userPaused=false,loadingFilm=false,filmBlobURL=null;
 const clock=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(Math.floor(s%60)).padStart(2,'0')}`;
 function updateFilm(){
- const duration=fullFilm&&Number.isFinite(video.duration)?video.duration:40;
- $('#film-time').textContent=`${clock(fullFilm?video.currentTime:0)} / ${clock(duration)}`;
- if(fullFilm){seek.max=duration;seek.value=video.currentTime}
- $('#play-label').textContent=loadingFilm?'Preparing the film…':fullFilm?(video.ended?'Replay the film':video.paused?'Continue the film':'Pause the film'):'Play the full film';
- $('.play-icon').innerHTML=fullFilm&&!video.paused
+ const duration=Number.isFinite(video.duration)?video.duration:40;
+ $('#film-time').textContent=`${clock(video.currentTime||0)} / ${clock(duration)}`;
+ seek.max=duration;seek.value=video.currentTime||0;
+ seek.disabled=!filmReady||!Number.isFinite(video.duration);
+ play.disabled=loadingFilm;
+ $('#play-label').textContent=loadingFilm?'Loading film…':video.paused?'Play film':'Pause film';
+ $('.play-icon').innerHTML=!video.paused
   ?'<svg width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12"/><rect x="9.5" y="2" width="3.5" height="12"/></svg>'
   :'<svg width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l10-5.5-10-5.5z"/></svg>';
- $('#film-preview').hidden=fullFilm;
- $('#film-preview').textContent=video.paused?'Play preview':'Pause preview';
 }
-async function tryPlay(){if(video.error)video.load();try{await video.play();$('#film-status').textContent=fullFilm?'Original AI-generated film. Sound is optional.':'A quiet moment. The full film is yours to start.'}catch{$('#film-status').textContent='Playback is paused. Press Play to try again.'}updateFilm()}
-function idle(){
- fullFilm=false;userPlaying=false;idlePaused=reduced.matches;video.pause();video.removeAttribute('src');video.muted=true;video.loop=true;source.src='assets/lagoon-loop.mp4';video.load();
- seek.disabled=true;seek.value=0;$('#film-idle').hidden=true;soundOn=false;sound.textContent='Sound off';sound.setAttribute('aria-pressed','false');
- $('#film-status').textContent='Contains a sudden shark encounter. Play when you’re ready.';
- updateFilm();if(!reduced.matches&&document.visibilityState==='visible')tryPlay();
+async function tryPlay(){
+ try{
+  await video.play();
+  $('#film-status').textContent='Looping showcase. Illustrative AI trade footage and authentic fictional website captures.';
+ }catch{
+  $('#film-status').textContent='Your browser paused autoplay. Use Play film to continue.';
+ }
+ updateFilm();
 }
-play.addEventListener('click',async()=>{
+async function prepareFilm(explicit=false){
  if(loadingFilm)return;
- if(!fullFilm){
-  loadingFilm=true;idlePaused=true;play.disabled=true;$('#film-preview').disabled=true;video.pause();updateFilm();
-  $('#film-status').textContent='Preparing the full film. This may take a moment.';
+ if(!filmReady){
+  loadingFilm=true;updateFilm();
+  $('#film-status').textContent='Loading the looping showcase…';
   try{
-   // A local Blob avoids unreliable range requests through review-host proxies.
-   // Download only after an explicit request; retain it in memory for replay.
+   // Load automatically; the in-memory Blob also supports seeking on review hosts
+   // whose media proxy does not reliably handle HTTP byte-range requests.
    if(!filmBlobURL){
-    const response=await fetch('assets/proof-of-possibility.mp4');
+    const response=await fetch(source.dataset.src);
     if(!response.ok)throw new Error('Film download unavailable');
     filmBlobURL=URL.createObjectURL(await response.blob());
    }
-   fullFilm=true;userPlaying=true;video.loop=false;video.src=filmBlobURL;video.load();video.muted=!soundOn;
-   seek.disabled=false;$('#film-idle').hidden=false;
-   const box=video.getBoundingClientRect();
-   if(!document.hidden&&box.bottom>0&&box.top<innerHeight)await tryPlay();
-   else $('#film-status').textContent='The film is ready. Press Continue when you’re ready.';
+   video.autoplay=(!reduced.matches||explicit)&&!userPaused;
+   video.src=filmBlobURL;video.loop=true;video.muted=!soundOn;video.load();filmReady=true;
   }catch{
-   $('#film-status').textContent='The film could not be prepared. Press Play to retry, or explore the work below.';
+   $('#film-status').textContent='The film could not be prepared. Use Play film to retry, or explore the work below.';
   }finally{
-   loadingFilm=false;play.disabled=false;$('#film-preview').disabled=false;updateFilm();
+   loadingFilm=false;updateFilm();
   }
  }
- else if(video.paused){userPlaying=true;if(video.ended)video.currentTime=0;await tryPlay()}
- else{video.pause();userPlaying=false}
+ if(filmReady&&!userPaused&&!document.hidden&&(!reduced.matches||explicit))await tryPlay();
+}
+play.addEventListener('click',async()=>{
+ if(loadingFilm)return;
+ if(!filmReady||video.paused){userPaused=false;await prepareFilm(true)}
+ else{userPaused=true;video.pause();$('#film-status').textContent='Film paused. Use Play film to resume.'}
  updateFilm();
 });
 sound.addEventListener('click',()=>{soundOn=!soundOn;video.muted=!soundOn;sound.textContent=soundOn?'Sound on':'Sound off';sound.setAttribute('aria-pressed',String(soundOn))});
-$('#film-preview').addEventListener('click',()=>{if(fullFilm)return;if(video.paused){idlePaused=false;video.loop=true;tryPlay()}else{idlePaused=true;video.pause()}updateFilm()});
-$('#film-idle').addEventListener('click',idle);
-seek.addEventListener('input',()=>{if(fullFilm&&Number.isFinite(video.duration))video.currentTime=Number(seek.value)});
+seek.addEventListener('input',()=>{if(filmReady&&Number.isFinite(video.duration))video.currentTime=Number(seek.value)});
 for(const event of ['timeupdate','loadedmetadata','pause','play','ended'])video.addEventListener(event,updateFilm);
 video.addEventListener('error',()=>{$('#film-status').textContent='The film could not load. Please try Play again or explore the interactive work below.'});
 source.addEventListener('error',()=>{$('#film-status').textContent='The film could not load. Please try again or explore the work below.'});
-const videoObserver=new IntersectionObserver(entries=>{for(const e of entries){if(!e.isIntersecting){video.pause()}else if(!fullFilm&&!reduced.matches&&!idlePaused){tryPlay()}}},{threshold:.1});videoObserver.observe(video);
-document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause();else if(!fullFilm&&!reduced.matches&&!idlePaused)tryPlay()});
-reduced.addEventListener('change',()=>{if(reduced.matches){idlePaused=true;video.pause()}});
-if(!reduced.matches)idle();
-else updateFilm();
+document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause();else if(!userPaused&&!reduced.matches)prepareFilm()});
+reduced.addEventListener('change',()=>{if(reduced.matches){video.pause();$('#film-status').textContent='Reduced motion: static poster. Play film is optional.'}else if(!userPaused)prepareFilm()});
+if(!reduced.matches)prepareFilm();
+else{$('#film-status').textContent='Reduced motion: static poster. Play film is optional.';updateFilm()}
 
 const form=$('#brief-form'),preview=$('#brief-preview'),submitBtn=$('#brief-submit');
 function encode(data){return Object.entries(data).map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(v)).join('&')}
